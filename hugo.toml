@@ -1,0 +1,60 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'My New Hugo Site'
+
+[module]
+[[module.imports]]
+  path = 'github.com/LordMathis/hugo-theme-nightfall'
+    # path = 'gitlab.com/jmfergeau/hugo.386'
+    # path = 'github.com/yukuro/hugo-theme-shell'
+
+[params]
+    user = "hello"
+    hostname = "ashish.khuraishy"
+    published = true
+    readingTime = false
+    footerHtml = 'Made with <i class="fas fa-heart"></i> by Ashish Khuraishy'
+
+[params.author]
+    name = "Ashish Khuraishy"
+    email = "ashishkhuraishy@gmail.com"
+
+[[params.social]]
+    key = 0
+    name = "github"
+    icon = "fab fa-github fa-lg"  
+    url = "https://github.com/ashishkhuraishy"
+
+[[params.social]]
+    key = 1
+    name = "twitter"
+    icon = "fab fa-twitter fa-lg"
+    url = "https://twitter.com/ashishkhuraishy"
+
+[[params.social]]
+    key = 2
+    name = "linkedin"
+    icon = "fab fa-linkedin fa-lg"
+    url = "https://www.linkedin.com/in/ashish-khuraishy/"
+
+[[params.social]]
+    key = 3
+    name = "email"
+    icon = "fas fa-envelope fa-lg"
+    url = "mailto:ashishkhuraishy@gmail.com"
+
+[menu]
+  [[menu.header]]
+    name = "posts"
+    weight = 1
+    url = "/posts"
+
+  [[menu.header]]
+    name = "about"
+    weight = 0
+    url = "/about"
+
+[taxonomies]
+  tag = "tags"
+
+

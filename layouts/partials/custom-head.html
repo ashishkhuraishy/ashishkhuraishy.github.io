@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    body {
+        font-family: 'fira mono','monospace';
+    }
+
+    .postHeader {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        text-align: left;
+        gap: 0.5em;
+    }
+
+    .postTitle {
+        flex: 1;
+    }
+
+    .postDate {
+        float: right;
+        color: #b6b6b6;
+        font-size: small;
+    }
+
+    /*
+        max 3 lines of text
+        then ellipsis
+        */ 
+    .postListItem p {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .footer {
+        font-size: xx-small;
+    }
+
+</style>
