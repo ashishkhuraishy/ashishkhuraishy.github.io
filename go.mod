@@ -1,6 +1,6 @@
 module github.com/ashishkhuraishy/ashishkhuraishy
 
-go 1.21.5
+go 1.21
 
 require (
 	github.com/LordMathis/hugo-theme-nightfall v0.6.1 // indirect
