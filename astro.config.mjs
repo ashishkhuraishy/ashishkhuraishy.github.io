@@ -8,10 +8,13 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'server',
-  vite: {
+
+   site: 'https://ashishkhuraishy.github.io',
+
+   output: 'server',
+   vite: {
     plugins: [tailwindcss()]
-  },
+   },
 
   integrations: [react()],
   experimental: {
