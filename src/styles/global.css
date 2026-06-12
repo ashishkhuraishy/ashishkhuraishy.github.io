@@ -45,9 +45,13 @@
 @layer base {
 	html {
 		scroll-behavior: smooth;
+		/* clip (never hidden: that breaks position:sticky) so a stray
+		   too-wide element can't make the whole page pan sideways */
+		overflow-x: clip;
 	}
 
 	body {
+		overflow-x: clip;
 		/* sticky footer: main grows so the footer stays at the bottom on short pages */
 		min-height: 100vh;
 		display: flex;

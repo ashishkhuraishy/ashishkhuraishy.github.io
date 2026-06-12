@@ -1,58 +1,108 @@
 ---
 // Signature visual: a live request trace flowing through a cloud platform.
+// Desktop gets a horizontal trace, mobile a vertical one; both share the
+// same packet engine. The packet travels blue on the request leg, green on
+// the response leg, nodes light up as it passes, and the 200 OK badge
+// flashes when the response makes it home. Every node is a section link,
+// and the latency badge is a real number from the Navigation Timing API.
 ---
 
 <div
+	id="trace-card"
 	class="mt-10 overflow-hidden rounded-[10px] border border-line-strong bg-panel shadow-[0_1px_0_rgba(11,18,32,.04),0_18px_40px_-28px_rgba(11,18,32,.25)] sm:mt-16"
-	aria-label="Animated diagram of a request flowing through a cloud platform"
+	aria-label="Request trace diagram, each node links to a section of this page"
 >
 	<div
 		class="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line px-4 py-2.5 font-mono text-xs text-ink-soft sm:text-[12.5px]"
 	>
 		<span class="rounded-[4px] bg-blue-dim px-[7px] py-px font-semibold text-blue-deep">TRACE</span>
-		<span>GET /portfolio<span class="hidden sm:inline"> · req_id=<span id="reqid">7f3a91</span></span></span>
-		<span class="ml-auto font-semibold text-green">200 OK · <span id="lat">38</span>ms</span>
+		<span>GET /portfolio</span>
+		<span class="hidden sm:inline">· req_id=<span id="reqid">7f3a91</span></span>
+		<span class="hidden md:inline">· nodes are links</span>
+		<span
+			id="ok-badge"
+			class="ml-auto font-semibold text-green-deep"
+			title="measured by your browser via the Navigation Timing API"
+		>
+			200 OK · <span id="lat">—</span>ms
+		</span>
 	</div>
-	<div class="overflow-x-auto">
-		<svg viewBox="0 0 1000 190" role="img" aria-hidden="true" class="block h-auto w-full min-w-[640px]">
-		<!-- wires -->
-		<path class="wire" d="M120 95 H 265 M375 95 H 480 M590 95 H 700 M810 95 H 880"></path>
-		<!-- hop latencies -->
-		<text class="hop-lat" x="170" y="84">2ms</text>
-		<text class="hop-lat" x="408" y="84">6ms</text>
-		<text class="hop-lat" x="625" y="84">11ms</text>
-		<text class="hop-lat" x="826" y="84">4ms</text>
-		<!-- nodes -->
-		<g>
-			<rect class="node-box" x="30" y="65" width="90" height="60" rx="7"></rect>
-			<text class="node-label" x="75" y="92" text-anchor="middle">client</text>
-			<text class="node-sub" x="75" y="110" text-anchor="middle">you</text>
-		</g>
-		<g>
-			<rect class="node-box" x="265" y="65" width="110" height="60" rx="7"></rect>
-			<text class="node-label" x="320" y="92" text-anchor="middle">edge / LB</text>
-			<text class="node-sub" x="320" y="110" text-anchor="middle">tls · routing</text>
-		</g>
-		<g>
-			<rect class="node-box" x="480" y="55" width="110" height="80" rx="7" stroke="#0F62FE" stroke-width="1.8"></rect>
-			<text class="node-label" x="535" y="86" text-anchor="middle" fill="#0F62FE">api (go)</text>
-			<text class="node-sub" x="535" y="104" text-anchor="middle">goroutines</text>
-			<text class="node-sub" x="535" y="120" text-anchor="middle">grpc · k8s</text>
-		</g>
-		<g>
-			<rect class="node-box" x="700" y="65" width="110" height="60" rx="7"></rect>
-			<text class="node-label" x="755" y="92" text-anchor="middle">queue</text>
-			<text class="node-sub" x="755" y="110" text-anchor="middle">async work</text>
-		</g>
-		<g>
-			<rect class="node-box" x="880" y="65" width="90" height="60" rx="7"></rect>
-			<text class="node-label" x="925" y="92" text-anchor="middle">db</text>
-			<text class="node-sub" x="925" y="110" text-anchor="middle">state</text>
-		</g>
-		<!-- packet -->
-		<circle id="packet-glow" r="9" cx="120" cy="95"></circle>
-		<circle id="packet" r="5" cx="120" cy="95"></circle>
-	</svg>
+
+	<!-- mobile: vertical trace -->
+	<div class="sm:hidden">
+		<svg id="trace-svg-m" viewBox="0 0 360 520" class="block h-auto w-full">
+			<path class="wire" d="M180 72 V 122 M180 178 V 228 M180 284 V 334 M180 390 V 440"></path>
+			<text class="hop-lat" x="192" y="101">2ms</text>
+			<text class="hop-lat" x="192" y="207">6ms</text>
+			<text class="hop-lat" x="192" y="313">11ms</text>
+			<text class="hop-lat" x="192" y="419">4ms</text>
+			<a href="/#about" aria-label="About section">
+				<rect class="node-box" x="70" y="16" width="220" height="56" rx="7"></rect>
+				<text class="node-label" x="180" y="40" text-anchor="middle">client</text>
+				<text class="node-sub" x="180" y="58" text-anchor="middle">/about</text>
+			</a>
+			<a href="/#experience" aria-label="Experience section">
+				<rect class="node-box" x="70" y="122" width="220" height="56" rx="7"></rect>
+				<text class="node-label" x="180" y="146" text-anchor="middle">edge / LB</text>
+				<text class="node-sub" x="180" y="164" text-anchor="middle">/experience</text>
+			</a>
+			<a href="/#stack" aria-label="Stack section">
+				<rect class="node-box" x="70" y="228" width="220" height="56" rx="7" stroke="#0F62FE" stroke-width="1.8"></rect>
+				<text class="node-label" x="180" y="252" text-anchor="middle" fill="#0F62FE">api (go)</text>
+				<text class="node-sub" x="180" y="270" text-anchor="middle">/stack</text>
+			</a>
+			<a href="/#projects" aria-label="Projects section">
+				<rect class="node-box" x="70" y="334" width="220" height="56" rx="7"></rect>
+				<text class="node-label" x="180" y="358" text-anchor="middle">queue</text>
+				<text class="node-sub" x="180" y="376" text-anchor="middle">/projects</text>
+			</a>
+			<a href="/#contact" aria-label="Contact section">
+				<rect class="node-box" x="70" y="440" width="220" height="56" rx="7"></rect>
+				<text class="node-label" x="180" y="464" text-anchor="middle">db</text>
+				<text class="node-sub" x="180" y="482" text-anchor="middle">/contact</text>
+			</a>
+			<circle class="packet-glow" r="9" cx="180" cy="44" fill="#0F62FE"></circle>
+			<circle class="packet" r="5" cx="180" cy="44" fill="#0F62FE"></circle>
+		</svg>
+	</div>
+
+	<!-- desktop: horizontal trace -->
+	<div class="hidden overflow-x-auto sm:block">
+		<svg id="trace-svg" viewBox="0 0 1000 190" class="block h-auto w-full min-w-[640px]">
+			<path class="wire" d="M120 95 H 265 M375 95 H 480 M590 95 H 700 M810 95 H 880"></path>
+			<text class="hop-lat" x="170" y="84">2ms</text>
+			<text class="hop-lat" x="408" y="84">6ms</text>
+			<text class="hop-lat" x="625" y="84">11ms</text>
+			<text class="hop-lat" x="826" y="84">4ms</text>
+			<a href="/#about" aria-label="About section">
+				<rect class="node-box" x="30" y="65" width="90" height="60" rx="7"></rect>
+				<text class="node-label" x="75" y="92" text-anchor="middle">client</text>
+				<text class="node-sub" x="75" y="110" text-anchor="middle">/about</text>
+			</a>
+			<a href="/#experience" aria-label="Experience section">
+				<rect class="node-box" x="265" y="65" width="110" height="60" rx="7"></rect>
+				<text class="node-label" x="320" y="92" text-anchor="middle">edge / LB</text>
+				<text class="node-sub" x="320" y="110" text-anchor="middle">/experience</text>
+			</a>
+			<a href="/#stack" aria-label="Stack section">
+				<rect class="node-box" x="480" y="55" width="110" height="80" rx="7" stroke="#0F62FE" stroke-width="1.8"></rect>
+				<text class="node-label" x="535" y="86" text-anchor="middle" fill="#0F62FE">api (go)</text>
+				<text class="node-sub" x="535" y="104" text-anchor="middle">goroutines</text>
+				<text class="node-sub" x="535" y="120" text-anchor="middle">/stack</text>
+			</a>
+			<a href="/#projects" aria-label="Projects section">
+				<rect class="node-box" x="700" y="65" width="110" height="60" rx="7"></rect>
+				<text class="node-label" x="755" y="92" text-anchor="middle">queue</text>
+				<text class="node-sub" x="755" y="110" text-anchor="middle">/projects</text>
+			</a>
+			<a href="/#contact" aria-label="Contact section">
+				<rect class="node-box" x="880" y="65" width="90" height="60" rx="7"></rect>
+				<text class="node-label" x="925" y="92" text-anchor="middle">db</text>
+				<text class="node-sub" x="925" y="110" text-anchor="middle">/contact</text>
+			</a>
+			<circle class="packet-glow" r="9" cx="120" cy="95" fill="#0F62FE"></circle>
+			<circle class="packet" r="5" cx="120" cy="95" fill="#0F62FE"></circle>
+		</svg>
 	</div>
 </div>
 
@@ -60,6 +110,20 @@
 	.node-box {
 		fill: #fff;
 		stroke: var(--color-line-strong);
+		transition: stroke 0.15s ease;
+	}
+	svg a {
+		cursor: pointer;
+	}
+	svg a:hover .node-box,
+	svg a:focus-visible .node-box,
+	svg a.node-active .node-box {
+		stroke: var(--color-blue);
+		stroke-width: 1.8;
+	}
+	svg a:hover .node-label,
+	svg a.node-active .node-label {
+		fill: var(--color-blue);
 	}
 	.node-label {
 		font-family: var(--font-mono);
@@ -83,53 +147,120 @@
 		fill: var(--color-blue);
 		font-weight: 600;
 	}
-	#packet {
-		fill: var(--color-blue);
-	}
-	#packet-glow {
-		fill: var(--color-blue);
+	.packet-glow {
 		opacity: 0.25;
+	}
+	#ok-badge.ok-flash {
+		animation: ok-flash 0.7s ease;
+	}
+	@keyframes ok-flash {
+		30% {
+			color: var(--color-green);
+			transform: scale(1.08);
+		}
 	}
 </style>
 
 <script>
 	const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-	// jittering latency + request id
+	// real page latency from the Navigation Timing API
 	const latEl = document.getElementById('lat');
+	const setLat = () => {
+		const [nav] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+		if (latEl && nav && nav.duration > 0) latEl.textContent = String(Math.round(nav.duration));
+	};
+	if (document.readyState === 'complete') setLat();
+	else window.addEventListener('load', () => setTimeout(setLat, 0));
+
+	// request id: a fresh one is issued each time a new request leaves the
+	// client (see the packet engine below)
 	const reqEl = document.getElementById('reqid');
-	if (!reduce && latEl && reqEl) {
-		setInterval(() => {
-			latEl.textContent = String(31 + Math.floor(Math.random() * 14));
-		}, 1800);
-		setInterval(() => {
-			reqEl.textContent = Math.random().toString(16).slice(2, 8);
-		}, 5400);
+	const newReqId = () => {
+		if (reqEl) reqEl.textContent = Math.random().toString(16).slice(2, 8);
+	};
+
+	// shared packet engine: drives whichever trace is on screen.
+	// blue = request leg, green = response leg; nodes light up on pass-through
+	// and the 200 OK badge flashes when the response lands back at the client.
+	const BLUE = '#0F62FE';
+	const GREEN = '#24A148';
+	const okBadge = document.getElementById('ok-badge');
+
+	interface Trace {
+		axis: 'cx' | 'cy';
+		from: number;
+		to: number;
+		centers: number[];
+		pkt: SVGCircleElement;
+		glow: SVGCircleElement;
+		nodes: SVGAElement[];
 	}
 
-	// packet animation along the wire (out and back)
-	const pkt = document.getElementById('packet');
-	const glow = document.getElementById('packet-glow');
-	if (!reduce && pkt && glow) {
+	const buildTrace = (svgId: string, axis: 'cx' | 'cy', from: number, to: number, centers: number[]): Trace | null => {
+		const svg = document.getElementById(svgId);
+		const pkt = svg?.querySelector<SVGCircleElement>('.packet');
+		const glow = svg?.querySelector<SVGCircleElement>('.packet-glow');
+		if (!svg || !pkt || !glow) return null;
+		return { axis, from, to, centers, pkt, glow, nodes: Array.from(svg.querySelectorAll('a')) };
+	};
+
+	const traces = [
+		buildTrace('trace-svg', 'cx', 120, 880, [75, 320, 535, 755, 925]),
+		buildTrace('trace-svg-m', 'cy', 44, 468, [44, 150, 256, 362, 468]),
+	].filter((t): t is Trace => t !== null);
+
+	const card = document.getElementById('trace-card');
+	if (!reduce && card && traces.length) {
 		let t = 0;
 		let dir = 1;
+		let rafId = 0;
+		let visible = false;
+
+		const flashOk = () => {
+			if (!okBadge) return;
+			okBadge.classList.remove('ok-flash');
+			void okBadge.offsetWidth; // restart the animation
+			okBadge.classList.add('ok-flash');
+		};
+
 		const frame = () => {
-			t += dir * 0.006;
+			t += dir * 0.004;
 			if (t >= 1) {
 				t = 1;
 				dir = -1;
 			}
-			if (t <= 0) {
+			if (t <= 0 && dir === -1) {
 				t = 0;
 				dir = 1;
+				flashOk(); // response landed: 200 OK
+				newReqId(); // and the next request leaves with a fresh id
 			}
 			// ease in-out
 			const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-			const x = 120 + e * (880 - 120);
-			pkt.setAttribute('cx', String(x));
-			glow.setAttribute('cx', String(x));
-			requestAnimationFrame(frame);
+			const color = dir === 1 ? BLUE : GREEN;
+			for (const tr of traces) {
+				const pos = tr.from + e * (tr.to - tr.from);
+				tr.pkt.setAttribute(tr.axis, String(pos));
+				tr.glow.setAttribute(tr.axis, String(pos));
+				tr.pkt.setAttribute('fill', color);
+				tr.glow.setAttribute('fill', color);
+				tr.nodes.forEach((node, i) => {
+					node.classList.toggle('node-active', Math.abs(tr.centers[i] - pos) < 42);
+				});
+			}
+			rafId = requestAnimationFrame(frame);
 		};
-		requestAnimationFrame(frame);
+
+		const io = new IntersectionObserver(([entry]) => {
+			if (entry.isIntersecting && !visible) {
+				visible = true;
+				rafId = requestAnimationFrame(frame);
+			} else if (!entry.isIntersecting && visible) {
+				visible = false;
+				cancelAnimationFrame(rafId);
+			}
+		});
+		io.observe(card);
 	}
 </script>
