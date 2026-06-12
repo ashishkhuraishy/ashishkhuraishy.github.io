@@ -62,7 +62,7 @@ import { SITE_TITLE } from '../consts';
 	const print = (text: string, cls = '') => {
 		if (!out) return;
 		const p = document.createElement('p');
-		if (cls) p.className = cls;
+		p.className = cls ? `whitespace-pre-wrap ${cls}` : 'whitespace-pre-wrap';
 		p.textContent = text;
 		out.appendChild(p);
 	};
