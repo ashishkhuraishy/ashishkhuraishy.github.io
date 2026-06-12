@@ -1,0 +1,52 @@
+---
+import SectionHead from './SectionHead.astro';
+
+const facts = [
+	{ k: 'role', v: 'backend / platform' },
+	{ k: 'current', v: 'IBM Cloud' },
+	{ k: 'location', v: 'Bengaluru, IN' },
+	{ k: 'primary_lang', v: 'Go' },
+	{ k: 'interests', v: 'infra · AI · distsys' },
+];
+---
+
+<section id="about" class="border-t border-line-strong py-12 sm:py-18">
+	<SectionHead title="About" path="/about" />
+	<div class="grid items-start gap-8 md:grid-cols-[1.4fr_1fr] md:gap-12">
+		<div class="space-y-3.5 text-[15.5px] text-ink-soft sm:text-[16.5px] [&_strong]:font-semibold [&_strong]:text-ink">
+			<p>
+				I'm a <strong>backend engineer and generalist</strong> who likes owning problems end to end
+				— from API design and data models to the Kubernetes manifests and the on-call runbook.
+				Right now that means building cloud platform infrastructure at <strong>IBM</strong>: the
+				boring-on-purpose layer that thousands of services depend on.
+			</p>
+			<p>
+				Before that I worked with <strong>AI systems and startups</strong>, where shipping fast and
+				wearing every hat taught me more than any course could. The startup speed plus the
+				platform-scale discipline is the combination I bring everywhere.
+			</p>
+			<p>
+				My default mode is <strong>learning by building</strong>. New runtime, new protocol, new
+				database — the fastest way I understand anything is to put it in production and watch what
+				breaks.
+			</p>
+		</div>
+		<aside
+			class="overflow-hidden rounded-[10px] border border-line-strong bg-panel font-mono text-[13px]"
+			aria-label="Quick facts"
+		>
+			{
+				facts.map(({ k, v }) => (
+					<div class="flex justify-between gap-3 border-b border-line px-4 py-[11px]">
+						<span class="text-ink-soft">{k}</span>
+						<span class="text-right font-semibold">{v}</span>
+					</div>
+				))
+			}
+			<div class="flex justify-between gap-3 px-4 py-[11px]">
+				<span class="text-ink-soft">status</span>
+				<span class="text-right font-semibold text-green">open to interesting work</span>
+			</div>
+		</aside>
+	</div>
+</section>

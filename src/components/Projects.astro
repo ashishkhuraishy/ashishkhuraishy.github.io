@@ -1,0 +1,72 @@
+---
+import { SOCIALS } from '../consts';
+import SectionHead from './SectionHead.astro';
+
+interface Project {
+	repo: string;
+	status: 'prod' | 'building';
+	title: string;
+	description: string;
+	tags: string[];
+	url?: string;
+}
+
+const projects: Project[] = [
+	{
+		repo: `github.com/${SOCIALS.github}/project-one`,
+		status: 'prod',
+		title: 'Project One',
+		description:
+			'Replace me — your strongest real project. One sentence on the problem, one on the result. Numbers beat adjectives: requests/sec, p99 latency, money saved.',
+		tags: ['#go', '#k8s', '#grpc'],
+	},
+	{
+		repo: `github.com/${SOCIALS.github}/project-two`,
+		status: 'prod',
+		title: 'Project Two',
+		description:
+			'Replace me — ideally something from your AI-startup era. "Built X that served Y users / processed Z events a day" is the format recruiters remember.',
+		tags: ['#ai', '#pipelines', '#apis'],
+	},
+	{
+		repo: `github.com/${SOCIALS.github}/weekend-build`,
+		status: 'building',
+		title: 'Current experiment',
+		description:
+			'Replace me — the thing you\'re learning right now. Keeping a "building" card here permanently signals exactly what you said: you like learning and building new shit.',
+		tags: ['#learning', '#wip'],
+	},
+];
+---
+
+<section id="projects" class="border-t border-line-strong py-12 sm:py-18">
+	<SectionHead title="Projects" path="/projects" />
+	<div class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))]">
+		{
+			projects.map((p) => (
+				<article class="flex flex-col gap-2.5 rounded-[10px] border border-line-strong bg-panel p-4 transition hover:-translate-y-[3px] hover:border-blue hover:shadow-[0_14px_30px_-18px_rgba(15,98,254,.35)] sm:p-[22px]">
+					<div class="flex items-center gap-2.5 font-mono text-xs">
+						<span class="break-all text-ink-soft">{p.repo}</span>
+						<span
+							class:list={[
+								'ml-auto rounded-full border px-2 py-px text-[11px] font-semibold',
+								p.status === 'prod'
+									? 'border-green-line bg-green-dim text-green-deep'
+									: 'border-[#F1C21B] bg-amber-dim text-amber-deep',
+							]}
+						>
+							{p.status}
+						</span>
+					</div>
+					<h3 class="text-[17.5px] font-semibold">{p.title}</h3>
+					<p class="flex-1 text-[14.5px] text-ink-soft">{p.description}</p>
+					<div class="flex flex-wrap gap-2 font-mono text-[11.5px] text-blue">
+						{p.tags.map((tag) => (
+							<span>{tag}</span>
+						))}
+					</div>
+				</article>
+			))
+		}
+	</div>
+</section>

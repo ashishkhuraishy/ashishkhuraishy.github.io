@@ -1,0 +1,86 @@
+---
+import SectionHead from './SectionHead.astro';
+
+interface Deploy {
+	version: string;
+	period: string;
+	live?: boolean;
+	company: string;
+	role: string;
+	points: string[];
+}
+
+const deploys: Deploy[] = [
+	{
+		version: 'v3.x',
+		period: '2024 → present',
+		live: true,
+		company: 'IBM',
+		role: 'Backend Engineer, Cloud Platform',
+		points: [
+			'Building core platform services on IBM Cloud — control plane components, internal APIs, and the infrastructure other product teams ship on.',
+			'Day to day: Go services, Kubernetes, gRPC, observability, and making distributed systems fail predictably instead of creatively.',
+			'Focus on reliability and developer experience at platform scale.',
+		],
+	},
+	{
+		version: 'v2.x',
+		period: 'earlier',
+		company: 'AI startup(s)',
+		role: 'Backend / Generalist Engineer',
+		points: [
+			'Built and shipped AI-powered products from zero — model-serving APIs, data pipelines, and the glue that turns a model into a product.',
+			'Owned everything from architecture decisions to deployment, because at a startup the org chart is "you".',
+			'Learned to ship fast without setting the building on fire.',
+		],
+	},
+	{
+		version: 'v1.x',
+		period: 'origin',
+		company: 'The early commits',
+		role: 'learning & building',
+		points: [
+			'Side projects, broken clusters, late-night rewrites. The usual path: curiosity → terminal → career.',
+		],
+	},
+];
+---
+
+<section id="experience" class="border-t border-line-strong py-12 sm:py-18">
+	<SectionHead title="Deployment history" path="/experience" />
+	<div class="ml-[7px] flex flex-col border-l-2 border-line-strong">
+		{
+			deploys.map((d) => (
+				<article
+					class:list={[
+						'relative pl-[34px] pb-11 last:pb-0',
+						"before:absolute before:top-1.5 before:-left-2 before:size-3 before:rounded-full before:content-['']",
+						d.live
+							? 'before:border-[2.5px] before:border-green before:bg-green'
+							: 'before:border-[2.5px] before:border-ink before:bg-paper',
+					]}
+				>
+					<p class="mb-1.5 flex flex-wrap gap-3.5 font-mono text-[12.5px] text-ink-soft">
+						<span class="font-semibold text-blue">{d.version}</span>
+						<span>{d.period}</span>
+						{d.live && (
+							<span class="rounded-full border border-green-line bg-green-dim px-2 py-px text-[11px] font-semibold text-green-deep">
+								● in production
+							</span>
+						)}
+					</p>
+					<h3 class="text-[19px] font-semibold">
+						{d.company} <span class="font-normal text-ink-soft">— {d.role}</span>
+					</h3>
+					<ul class="mt-2.5 max-w-[640px] text-[15.5px] text-ink-soft">
+						{d.points.map((point) => (
+							<li class="relative mt-1.5 pl-[18px] before:absolute before:left-0.5 before:font-mono before:text-blue before:content-['›']">
+								{point}
+							</li>
+						))}
+					</ul>
+				</article>
+			))
+		}
+	</div>
+</section>

@@ -1,0 +1,19 @@
+---
+interface Props {
+	title: string;
+	method?: string;
+	path: string;
+}
+
+const { title, method = 'GET', path } = Astro.props;
+---
+
+<div class="mb-9 flex flex-wrap items-baseline gap-3.5">
+	<h2 class="text-[22px] font-bold tracking-tight sm:text-[26px]">{title}</h2>
+	<span
+		class="rounded-[5px] border border-line bg-panel px-2 py-0.5 font-mono text-[13px] text-ink-soft"
+	>
+		<b class="font-semibold text-green">{method}</b>
+		{path}
+	</span>
+</div>

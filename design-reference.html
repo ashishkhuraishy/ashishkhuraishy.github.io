@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>arjun.dev — backend &amp; cloud platform engineer</title>
+<meta name="description" content="Backend engineer building cloud platforms. Go, Kubernetes, distributed systems. Currently at IBM Cloud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F8FA;
+    --panel:#FFFFFF;
+    --ink:#0B1220;
+    --ink-soft:#4B5563;
+    --line:#DDE3EA;
+    --line-strong:#B8C2CE;
+    --blue:#0F62FE;
+    --blue-dim:#D0E2FF;
+    --green:#24A148;
+    --green-dim:#DEFBE6;
+    --amber:#B28600;
+    --amber-dim:#FCF4D6;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', system-ui, sans-serif;
+    --maxw:1060px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:48px 48px;
+    background-position:center top;
+  }
+  ::selection{background:var(--blue);color:#fff}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* ---------- status bar ---------- */
+  .statusbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,248,250,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line-strong);
+  }
+  .statusbar-inner{
+    max-width:var(--maxw);margin:0 auto;padding:10px 24px;
+    display:flex;align-items:center;gap:16px;
+    font-family:var(--mono);font-size:12.5px;
+  }
+  .svc-name{font-weight:600;color:var(--ink)}
+  .svc-name a{color:inherit}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:2px 10px;border-radius:999px;
+    background:var(--green-dim);color:#0E6027;font-weight:500;
+    border:1px solid #A7F0BA;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);position:relative}
+  .dot::after{
+    content:"";position:absolute;inset:-4px;border-radius:50%;
+    border:1px solid var(--green);opacity:0;
+    animation:ping 2.4s ease-out infinite;
+  }
+  @keyframes ping{0%{transform:scale(.5);opacity:.8}80%,100%{transform:scale(1.6);opacity:0}}
+  .statusbar .meta{color:var(--ink-soft)}
+  .statusbar nav{margin-left:auto;display:flex;gap:18px}
+  .statusbar nav a{color:var(--ink-soft)}
+  .statusbar nav a:hover{color:var(--blue);text-decoration:none}
+  .uptime{display:none}
+  @media(min-width:760px){.uptime{display:inline}}
+  @media(max-width:620px){.statusbar nav{display:none}.statusbar-inner{gap:10px}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:84px 0 56px;position:relative}
+  .eyebrow{
+    font-family:var(--mono);font-size:13px;color:var(--blue);
+    letter-spacing:.04em;margin-bottom:18px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--blue)}
+  h1{
+    font-size:clamp(34px,5.6vw,62px);
+    line-height:1.08;font-weight:700;letter-spacing:-.022em;
+    max-width:760px;
+  }
+  h1 .em{color:var(--blue)}
+  .hero p.lede{
+    margin-top:22px;max-width:600px;font-size:18px;color:var(--ink-soft);
+  }
+  .hero .cta-row{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    font-family:var(--mono);font-size:14px;font-weight:500;
+    padding:11px 20px;border-radius:6px;display:inline-flex;align-items:center;gap:8px;
+    border:1px solid var(--ink);transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover{text-decoration:none;transform:translateY(-1px)}
+  .btn-primary{background:var(--ink);color:#fff}
+  .btn-primary:hover{box-shadow:0 4px 14px rgba(11,18,32,.22)}
+  .btn-ghost{background:var(--panel);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
+
+  /* ---------- trace diagram (signature) ---------- */
+  .trace{
+    margin:64px 0 0;background:var(--panel);
+    border:1px solid var(--line-strong);border-radius:10px;
+    box-shadow:0 1px 0 rgba(11,18,32,.04), 0 18px 40px -28px rgba(11,18,32,.25);
+    overflow:hidden;
+  }
+  .trace-head{
+    display:flex;align-items:center;gap:12px;
+    padding:10px 16px;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);
+  }
+  .trace-head .badge{
+    background:var(--blue-dim);color:#00309b;border-radius:4px;
+    padding:1px 7px;font-weight:600;
+  }
+  .trace-head .lat{margin-left:auto;color:var(--green);font-weight:600}
+  .trace svg{display:block;width:100%;height:auto}
+  .node-box{fill:#fff;stroke:var(--line-strong)}
+  .node-label{font-family:var(--mono);font-size:12px;fill:var(--ink);font-weight:600}
+  .node-sub{font-family:var(--mono);font-size:10px;fill:var(--ink-soft)}
+  .wire{stroke:var(--line-strong);stroke-width:1.5;fill:none}
+  .hop-lat{font-family:var(--mono);font-size:10px;fill:var(--blue);font-weight:600}
+  #packet{fill:var(--blue)}
+  #packet-glow{fill:var(--blue);opacity:.25}
+
+  /* ---------- sections ---------- */
+  section{padding:72px 0;border-top:1px solid var(--line-strong)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:36px;flex-wrap:wrap}
+  .sec-head h2{font-size:26px;font-weight:700;letter-spacing:-.01em}
+  .endpoint{
+    font-family:var(--mono);font-size:13px;color:var(--ink-soft);
+    background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:2px 9px;
+  }
+  .endpoint b{color:var(--green);font-weight:600}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start}
+  .about-grid p+p{margin-top:14px}
+  .about-grid p{color:var(--ink-soft);font-size:16.5px}
+  .about-grid p strong{color:var(--ink)}
+  .factsheet{
+    background:var(--panel);border:1px solid var(--line-strong);border-radius:10px;
+    font-family:var(--mono);font-size:13px;overflow:hidden;
+  }
+  .factsheet .row{display:flex;justify-content:space-between;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line)}
+  .factsheet .row:last-child{border-bottom:none}
+  .factsheet .k{color:var(--ink-soft)}
+  .factsheet .v{font-weight:600;text-align:right}
+  @media(max-width:780px){.about-grid{grid-template-columns:1fr}}
+
+  /* deploy history */
+  .deploys{display:flex;flex-direction:column;gap:0;border-left:2px solid var(--line-strong);margin-left:7px}
+  .deploy{position:relative;padding:0 0 44px 34px}
+  .deploy:last-child{padding-bottom:0}
+  .deploy::before{
+    content:"";position:absolute;left:-8px;top:6px;width:12px;height:12px;border-radius:50%;
+    background:var(--paper);border:2.5px solid var(--ink);
+  }
+  .deploy.live::before{background:var(--green);border-color:var(--green)}
+  .deploy .tagline{
+    font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);
+    display:flex;gap:14px;flex-wrap:wrap;margin-bottom:6px;
+  }
+  .deploy .tagline .ver{color:var(--blue);font-weight:600}
+  .deploy h3{font-size:19px;font-weight:600}
+  .deploy h3 .role{color:var(--ink-soft);font-weight:400}
+  .deploy ul{margin-top:10px;list-style:none;color:var(--ink-soft);font-size:15.5px;max-width:640px}
+  .deploy li{padding-left:18px;position:relative;margin-top:6px}
+  .deploy li::before{content:"›";position:absolute;left:2px;color:var(--blue);font-family:var(--mono)}
+  .live-pill{
+    font-family:var(--mono);font-size:11px;background:var(--green-dim);color:#0E6027;
+    border:1px solid #A7F0BA;border-radius:999px;padding:1px 9px;font-weight:600;
+  }
+
+  /* stack as go.mod */
+  .gomod{
+    background:#0B1220;color:#D6DEE9;border-radius:10px;
+    font-family:var(--mono);font-size:13.5px;line-height:1.85;
+    padding:26px 28px;overflow-x:auto;
+    box-shadow:0 18px 40px -28px rgba(11,18,32,.5);
+  }
+  .gomod .c{color:#5B6B82}
+  .gomod .kw{color:#78A9FF}
+  .gomod .str{color:#42BE65}
+  .gomod .ver{color:#F1C21B}
+  .stack-note{margin-top:16px;font-size:14px;color:var(--ink-soft)}
+
+  /* projects */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px}
+  .card{
+    background:var(--panel);border:1px solid var(--line-strong);border-radius:10px;
+    padding:22px;display:flex;flex-direction:column;gap:10px;
+    transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 14px 30px -18px rgba(15,98,254,.35)}
+  .card .top{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px}
+  .card .repo{color:var(--ink-soft)}
+  .card .st{margin-left:auto;border-radius:999px;padding:1px 9px;font-weight:600;font-size:11px}
+  .st-prod{background:var(--green-dim);color:#0E6027;border:1px solid #A7F0BA}
+  .st-wip{background:var(--amber-dim);color:#684e00;border:1px solid #F1C21B}
+  .card h3{font-size:17.5px;font-weight:600}
+  .card p{color:var(--ink-soft);font-size:14.5px;flex:1}
+  .card .tags{display:flex;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--blue)}
+
+  /* contact */
+  .contact-panel{
+    background:var(--panel);border:1px solid var(--line-strong);border-radius:10px;
+    padding:34px;display:grid;grid-template-columns:1.3fr 1fr;gap:36px;align-items:center;
+  }
+  .contact-panel h2{font-size:30px;letter-spacing:-.015em;line-height:1.15}
+  .contact-panel p{margin-top:12px;color:var(--ink-soft)}
+  .contact-links{display:flex;flex-direction:column;gap:12px;font-family:var(--mono);font-size:14px}
+  .contact-links a{
+    display:flex;justify-content:space-between;gap:10px;padding:12px 16px;
+    border:1px solid var(--line);border-radius:7px;color:var(--ink);
+  }
+  .contact-links a:hover{border-color:var(--blue);color:var(--blue);text-decoration:none}
+  .contact-links .arrow{color:var(--ink-soft)}
+  @media(max-width:780px){.contact-panel{grid-template-columns:1fr;padding:26px}}
+
+  footer{
+    border-top:1px solid var(--line-strong);
+    padding:26px 0 40px;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);
+  }
+  .foot-inner{max-width:var(--maxw);margin:0 auto;padding:0 24px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .foot-inner .ok{color:var(--green);font-weight:600}
+  .foot-inner .right{margin-left:auto}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<header class="statusbar">
+  <div class="statusbar-inner">
+    <span class="svc-name"><a href="#top">arjun.dev</a></span>
+    <span class="pill"><span class="dot"></span> operational</span>
+    <span class="meta uptime">uptime <span id="uptime">—</span></span>
+    <nav aria-label="Primary">
+      <a href="#about">/about</a>
+      <a href="#experience">/experience</a>
+      <a href="#stack">/stack</a>
+      <a href="#projects">/projects</a>
+      <a href="#contact">/contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top" class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="eyebrow">backend · cloud platform · golang</p>
+    <h1>I build the platforms<br>other engineers <span class="em">build on.</span></h1>
+    <p class="lede">Backend generalist working on cloud platform at IBM. Previously shipped AI systems at startups. I like Go, distributed infrastructure, learning fast, and building new shit that stays up.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">view projects →</a>
+      <a class="btn btn-ghost" href="#contact">POST /contact</a>
+    </div>
+
+    <!-- signature: live request trace -->
+    <div class="trace" aria-label="Animated diagram of a request flowing through a cloud platform">
+      <div class="trace-head">
+        <span class="badge">TRACE</span>
+        <span>GET /portfolio · req_id=<span id="reqid">7f3a91</span></span>
+        <span class="lat">200 OK · <span id="lat">38</span>ms</span>
+      </div>
+      <svg viewBox="0 0 1000 190" role="img" aria-hidden="true">
+        <!-- wires -->
+        <path id="wirepath" class="wire" d="M120 95 H 265 M375 95 H 480 M590 95 H 700 M810 95 H 880" />
+        <path class="wire" d="M120 95 H 880" opacity="0"/>
+        <!-- hop latencies -->
+        <text class="hop-lat" x="170" y="84">2ms</text>
+        <text class="hop-lat" x="408" y="84">6ms</text>
+        <text class="hop-lat" x="625" y="84">11ms</text>
+        <text class="hop-lat" x="826" y="84">4ms</text>
+        <!-- nodes -->
+        <g>
+          <rect class="node-box" x="30" y="65" width="90" height="60" rx="7"/>
+          <text class="node-label" x="75" y="92" text-anchor="middle">client</text>
+          <text class="node-sub" x="75" y="110" text-anchor="middle">you</text>
+        </g>
+        <g>
+          <rect class="node-box" x="265" y="65" width="110" height="60" rx="7"/>
+          <text class="node-label" x="320" y="92" text-anchor="middle">edge / LB</text>
+          <text class="node-sub" x="320" y="110" text-anchor="middle">tls · routing</text>
+        </g>
+        <g>
+          <rect class="node-box" x="480" y="55" width="110" height="80" rx="7" stroke="#0F62FE" stroke-width="1.8"/>
+          <text class="node-label" x="535" y="86" text-anchor="middle" fill="#0F62FE">api (go)</text>
+          <text class="node-sub" x="535" y="104" text-anchor="middle">goroutines</text>
+          <text class="node-sub" x="535" y="120" text-anchor="middle">grpc · k8s</text>
+        </g>
+        <g>
+          <rect class="node-box" x="700" y="65" width="110" height="60" rx="7"/>
+          <text class="node-label" x="755" y="92" text-anchor="middle">queue</text>
+          <text class="node-sub" x="755" y="110" text-anchor="middle">async work</text>
+        </g>
+        <g>
+          <rect class="node-box" x="880" y="65" width="90" height="60" rx="7"/>
+          <text class="node-label" x="925" y="92" text-anchor="middle">db</text>
+          <text class="node-sub" x="925" y="110" text-anchor="middle">state</text>
+        </g>
+        <!-- packet -->
+        <circle id="packet-glow" r="9" cx="120" cy="95"/>
+        <circle id="packet" r="5" cx="120" cy="95"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sec-head">
+      <h2>About</h2>
+      <span class="endpoint"><b>GET</b> /about</span>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a <strong>backend engineer and generalist</strong> who likes owning problems end to end — from API design and data models to the Kubernetes manifests and the on-call runbook. Right now that means building cloud platform infrastructure at <strong>IBM</strong>: the boring-on-purpose layer that thousands of services depend on.</p>
+        <p>Before that I worked with <strong>AI systems and startups</strong>, where shipping fast and wearing every hat taught me more than any course could. The startup speed plus the platform-scale discipline is the combination I bring everywhere.</p>
+        <p>My default mode is <strong>learning by building</strong>. New runtime, new protocol, new database — the fastest way I understand anything is to put it in production and watch what breaks.</p>
+      </div>
+      <aside class="factsheet" aria-label="Quick facts">
+        <div class="row"><span class="k">role</span><span class="v">backend / platform</span></div>
+        <div class="row"><span class="k">current</span><span class="v">IBM Cloud</span></div>
+        <div class="row"><span class="k">location</span><span class="v">Bengaluru, IN</span></div>
+        <div class="row"><span class="k">primary_lang</span><span class="v">Go</span></div>
+        <div class="row"><span class="k">interests</span><span class="v">infra · AI · distsys</span></div>
+        <div class="row"><span class="k">status</span><span class="v" style="color:var(--green)">open to interesting work</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-head">
+      <h2>Deployment history</h2>
+      <span class="endpoint"><b>GET</b> /experience</span>
+    </div>
+    <div class="deploys">
+      <article class="deploy live">
+        <p class="tagline"><span class="ver">v3.x</span><span>2024 → present</span><span class="live-pill">● in production</span></p>
+        <h3>IBM <span class="role">— Backend Engineer, Cloud Platform</span></h3>
+        <ul>
+          <li>Building core platform services on IBM Cloud — control plane components, internal APIs, and the infrastructure other product teams ship on.</li>
+          <li>Day to day: Go services, Kubernetes, gRPC, observability, and making distributed systems fail predictably instead of creatively.</li>
+          <li>Focus on reliability and developer experience at platform scale.</li>
+        </ul>
+      </article>
+      <article class="deploy">
+        <p class="tagline"><span class="ver">v2.x</span><span>earlier</span></p>
+        <h3>AI startup(s) <span class="role">— Backend / Generalist Engineer</span></h3>
+        <ul>
+          <li>Built and shipped AI-powered products from zero — model-serving APIs, data pipelines, and the glue that turns a model into a product.</li>
+          <li>Owned everything from architecture decisions to deployment, because at a startup the org chart is "you".</li>
+          <li>Learned to ship fast without setting the building on fire.</li>
+        </ul>
+      </article>
+      <article class="deploy">
+        <p class="tagline"><span class="ver">v1.x</span><span>origin</span></p>
+        <h3>The early commits <span class="role">— learning &amp; building</span></h3>
+        <ul>
+          <li>Side projects, broken clusters, late-night rewrites. The usual path: curiosity → terminal → career.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="sec-head">
+      <h2>Stack</h2>
+      <span class="endpoint"><b>GET</b> /stack</span>
+    </div>
+    <pre class="gomod" aria-label="Skills presented as a Go module file"><code><span class="c">// what I actually use, not a keyword wall</span>
+<span class="kw">module</span> <span class="str">github.com/arjun/engineering</span>
+
+<span class="kw">go</span> <span class="ver">1.24</span>
+
+<span class="kw">require</span> (
+    <span class="str">golang</span>                  <span class="ver">vDaily</span>   <span class="c">// services, CLIs, concurrency</span>
+    <span class="str">kubernetes</span>              <span class="ver">vProd</span>    <span class="c">// operators, controllers, debugging at 2am</span>
+    <span class="str">grpc-and-rest</span>           <span class="ver">vProd</span>    <span class="c">// api design, protobuf, versioning</span>
+    <span class="str">postgres / redis</span>        <span class="ver">vProd</span>    <span class="c">// state, caching, "why is this slow"</span>
+    <span class="str">kafka / queues</span>          <span class="ver">vProd</span>    <span class="c">// async pipelines, exactly-once-ish</span>
+    <span class="str">terraform / ci-cd</span>       <span class="ver">vProd</span>    <span class="c">// infra as code, pipelines</span>
+    <span class="str">observability</span>           <span class="ver">vProd</span>    <span class="c">// prometheus, tracing, slo thinking</span>
+    <span class="str">ai-systems</span>              <span class="ver">vShipped</span> <span class="c">// llm apis, serving, rag pipelines</span>
+    <span class="str">new-shiny-things</span>        <span class="ver">vAlways</span>  <span class="c">// currently learning: see /projects</span>
+)</code></pre>
+    <p class="stack-note">Versions are honest: <code style="font-family:var(--mono)">vProd</code> means I've run it in production and been paged for it.</p>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-head">
+      <h2>Projects</h2>
+      <span class="endpoint"><b>GET</b> /projects</span>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="top"><span class="repo">github.com/arjun/​project-one</span><span class="st st-prod">prod</span></div>
+        <h3>Project One</h3>
+        <p>Replace me — your strongest real project. One sentence on the problem, one on the result. Numbers beat adjectives: requests/sec, p99 latency, money saved.</p>
+        <div class="tags"><span>#go</span><span>#k8s</span><span>#grpc</span></div>
+      </article>
+      <article class="card">
+        <div class="top"><span class="repo">github.com/arjun/​project-two</span><span class="st st-prod">prod</span></div>
+        <h3>Project Two</h3>
+        <p>Replace me — ideally something from your AI-startup era. "Built X that served Y users / processed Z events a day" is the format recruiters remember.</p>
+        <div class="tags"><span>#ai</span><span>#pipelines</span><span>#apis</span></div>
+      </article>
+      <article class="card">
+        <div class="top"><span class="repo">github.com/arjun/​weekend-build</span><span class="st st-wip">building</span></div>
+        <h3>Current experiment</h3>
+        <p>Replace me — the thing you're learning right now. Keeping a "building" card here permanently signals exactly what you said: you like learning and building new shit.</p>
+        <div class="tags"><span>#learning</span><span>#wip</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-panel">
+      <div>
+        <span class="endpoint" style="margin-bottom:14px;display:inline-block"><b>POST</b> /contact</span>
+        <h2>Let's build something that stays up.</h2>
+        <p>Open to interesting platform problems, Go work, and conversations about infrastructure, AI systems, or why your cluster is doing that.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:you@example.com"><span>email</span><span class="arrow">you@example.com →</span></a>
+        <a href="https://github.com/yourhandle" target="_blank" rel="noopener"><span>github</span><span class="arrow">/yourhandle →</span></a>
+        <a href="https://linkedin.com/in/yourhandle" target="_blank" rel="noopener"><span>linkedin</span><span class="arrow">/in/yourhandle →</span></a>
+        <a href="https://x.com/yourhandle" target="_blank" rel="noopener"><span>x / twitter</span><span class="arrow">@yourhandle →</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span class="ok">200 OK</span>
+    <span>served from bengaluru · zero frameworks · one html file</span>
+    <span class="right">© <span id="yr"></span> arjun.dev</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // uptime ticker (since "career start" — edit the date)
+  var start = new Date('2019-06-01T00:00:00Z');
+  function tick(){
+    var s = Math.floor((Date.now() - start)/1000);
+    var d = Math.floor(s/86400), h = Math.floor(s%86400/3600), m = Math.floor(s%3600/60), sec = s%60;
+    document.getElementById('uptime').textContent = d + 'd ' + h + 'h ' + m + 'm ' + sec + 's';
+  }
+  tick(); setInterval(tick, 1000);
+
+  // jittering latency + request id
+  var latEl = document.getElementById('lat'), reqEl = document.getElementById('reqid');
+  if(!reduce){
+    setInterval(function(){
+      latEl.textContent = 31 + Math.floor(Math.random()*14);
+    }, 1800);
+    setInterval(function(){
+      reqEl.textContent = Math.random().toString(16).slice(2,8);
+    }, 5400);
+  }
+
+  // packet animation along the wire (out and back)
+  var pkt = document.getElementById('packet'), glow = document.getElementById('packet-glow');
+  var stops = [120, 265, 375, 480, 590, 700, 810, 880]; // x coords matching node edges
+  if(!reduce){
+    var t = 0, dir = 1;
+    function frame(){
+      t += dir * 0.006;
+      if(t >= 1){ t = 1; dir = -1; }
+      if(t <= 0){ t = 0; dir = 1; }
+      // ease in-out
+      var e = t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2;
+      var x = 120 + e * (880 - 120);
+      pkt.setAttribute('cx', x); glow.setAttribute('cx', x);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
+</body>
+</html>

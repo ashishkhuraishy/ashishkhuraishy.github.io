@@ -1,0 +1,135 @@
+---
+// Signature visual: a live request trace flowing through a cloud platform.
+---
+
+<div
+	class="mt-10 overflow-hidden rounded-[10px] border border-line-strong bg-panel shadow-[0_1px_0_rgba(11,18,32,.04),0_18px_40px_-28px_rgba(11,18,32,.25)] sm:mt-16"
+	aria-label="Animated diagram of a request flowing through a cloud platform"
+>
+	<div
+		class="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line px-4 py-2.5 font-mono text-xs text-ink-soft sm:text-[12.5px]"
+	>
+		<span class="rounded-[4px] bg-blue-dim px-[7px] py-px font-semibold text-blue-deep">TRACE</span>
+		<span>GET /portfolio<span class="hidden sm:inline"> · req_id=<span id="reqid">7f3a91</span></span></span>
+		<span class="ml-auto font-semibold text-green">200 OK · <span id="lat">38</span>ms</span>
+	</div>
+	<div class="overflow-x-auto">
+		<svg viewBox="0 0 1000 190" role="img" aria-hidden="true" class="block h-auto w-full min-w-[640px]">
+		<!-- wires -->
+		<path class="wire" d="M120 95 H 265 M375 95 H 480 M590 95 H 700 M810 95 H 880"></path>
+		<!-- hop latencies -->
+		<text class="hop-lat" x="170" y="84">2ms</text>
+		<text class="hop-lat" x="408" y="84">6ms</text>
+		<text class="hop-lat" x="625" y="84">11ms</text>
+		<text class="hop-lat" x="826" y="84">4ms</text>
+		<!-- nodes -->
+		<g>
+			<rect class="node-box" x="30" y="65" width="90" height="60" rx="7"></rect>
+			<text class="node-label" x="75" y="92" text-anchor="middle">client</text>
+			<text class="node-sub" x="75" y="110" text-anchor="middle">you</text>
+		</g>
+		<g>
+			<rect class="node-box" x="265" y="65" width="110" height="60" rx="7"></rect>
+			<text class="node-label" x="320" y="92" text-anchor="middle">edge / LB</text>
+			<text class="node-sub" x="320" y="110" text-anchor="middle">tls · routing</text>
+		</g>
+		<g>
+			<rect class="node-box" x="480" y="55" width="110" height="80" rx="7" stroke="#0F62FE" stroke-width="1.8"></rect>
+			<text class="node-label" x="535" y="86" text-anchor="middle" fill="#0F62FE">api (go)</text>
+			<text class="node-sub" x="535" y="104" text-anchor="middle">goroutines</text>
+			<text class="node-sub" x="535" y="120" text-anchor="middle">grpc · k8s</text>
+		</g>
+		<g>
+			<rect class="node-box" x="700" y="65" width="110" height="60" rx="7"></rect>
+			<text class="node-label" x="755" y="92" text-anchor="middle">queue</text>
+			<text class="node-sub" x="755" y="110" text-anchor="middle">async work</text>
+		</g>
+		<g>
+			<rect class="node-box" x="880" y="65" width="90" height="60" rx="7"></rect>
+			<text class="node-label" x="925" y="92" text-anchor="middle">db</text>
+			<text class="node-sub" x="925" y="110" text-anchor="middle">state</text>
+		</g>
+		<!-- packet -->
+		<circle id="packet-glow" r="9" cx="120" cy="95"></circle>
+		<circle id="packet" r="5" cx="120" cy="95"></circle>
+	</svg>
+	</div>
+</div>
+
+<style>
+	.node-box {
+		fill: #fff;
+		stroke: var(--color-line-strong);
+	}
+	.node-label {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		fill: var(--color-ink);
+		font-weight: 600;
+	}
+	.node-sub {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		fill: var(--color-ink-soft);
+	}
+	.wire {
+		stroke: var(--color-line-strong);
+		stroke-width: 1.5;
+		fill: none;
+	}
+	.hop-lat {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		fill: var(--color-blue);
+		font-weight: 600;
+	}
+	#packet {
+		fill: var(--color-blue);
+	}
+	#packet-glow {
+		fill: var(--color-blue);
+		opacity: 0.25;
+	}
+</style>
+
+<script>
+	const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	// jittering latency + request id
+	const latEl = document.getElementById('lat');
+	const reqEl = document.getElementById('reqid');
+	if (!reduce && latEl && reqEl) {
+		setInterval(() => {
+			latEl.textContent = String(31 + Math.floor(Math.random() * 14));
+		}, 1800);
+		setInterval(() => {
+			reqEl.textContent = Math.random().toString(16).slice(2, 8);
+		}, 5400);
+	}
+
+	// packet animation along the wire (out and back)
+	const pkt = document.getElementById('packet');
+	const glow = document.getElementById('packet-glow');
+	if (!reduce && pkt && glow) {
+		let t = 0;
+		let dir = 1;
+		const frame = () => {
+			t += dir * 0.006;
+			if (t >= 1) {
+				t = 1;
+				dir = -1;
+			}
+			if (t <= 0) {
+				t = 0;
+				dir = 1;
+			}
+			// ease in-out
+			const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+			const x = 120 + e * (880 - 120);
+			pkt.setAttribute('cx', String(x));
+			glow.setAttribute('cx', String(x));
+			requestAnimationFrame(frame);
+		};
+		requestAnimationFrame(frame);
+	}
+</script>
