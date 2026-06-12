@@ -1,36 +1,47 @@
 ASHISH KHURAISHY
-platform engineer
+platform engineer · kochi, india
 
   email      ashishkhuraishy@gmail.com
   github     github.com/ashishkhuraishy
   linkedin   linkedin.com/in/ashish-khuraishy
   site       ashishkhuraishy.github.io
 
-NOW · IBM · Platform Engineer, Cloud
+2026 — NOW · IBM · Platform Engineer, Cloud
   - Write and maintain Kubernetes controllers for IBM Cloud's database
     platform, the layer the database product teams ship on.
   - Work with database teams to get their products running well on the
     platform: onboarding, integration, and the edge cases in between.
   - Regular ops duty on a multi-tenant platform.
 
-BEFORE · HiFX · Software Engineer
-  - Production Go microservices: REST, gRPC, PostgreSQL, Redis, RabbitMQ.
-  - EDI service processing daily warehouse order volumes; AWS API that
-    provisioned isolated CTF environments on demand (hours -> minutes).
-  - Private blockchain on Cosmos SDK, Stripe billing, cryptographic
-    document verification for a SaaS platform.
-  - Monitoring with Grafana, Prometheus, Loki; Docker-based CI/CD.
+2023 — 2026 · HiFX · Software Engineer
+  - Led and mentored small teams building production Go microservices:
+    REST, gRPC, PostgreSQL, Redis, RabbitMQ.
+  - Built an EDI service processing daily warehouse order volumes, and
+    an AWS API that provisioned isolated CTF environments on demand,
+    cutting setup time from hours to minutes.
+  - Architected a private blockchain on Cosmos SDK for financial data
+    integrity; added Stripe billing and cryptographic document
+    verification to a SaaS platform.
+  - Set up monitoring with Grafana, Prometheus, and Loki, and
+    Docker-based CI/CD pipelines.
 
-EARLIER · Navana · Software Engineer, ML Team
-  - Backend for India's largest voice-data collection initiative.
-  - ML-based audio validation pipeline in Python that took over a good
-    chunk of the manual quality checks.
-  - Looked after on-prem GPU infrastructure; internal tools across Go,
-    Python, Flutter, and React.
+2021 — 2023 · Navana · Software Engineer, ML Team
+  - Kept the backend of India's largest voice-data collection
+    initiative stable through peak collection periods.
+  - Built an ML-based audio validation pipeline in Python that took
+    over a good chunk of the manual quality checks.
+  - Administered on-prem GPU infrastructure for ML teams: provisioning,
+    MLOps pipelines, and resource allocation across competing workloads.
+  - Shipped internal tools across Go, Python, Node.js, Flutter, and
+    React, including a Slack integration for live collection metrics.
+
+EDUCATION
+  B.Tech, Computer Science · Bir Tikendrajit University
 
 STACK
   golang, kubernetes (controllers/operators), grpc, rest, postgresql,
-  redis, rabbitmq, docker, ci/cd, grafana, prometheus, loki, aws
+  redis, rabbitmq, mongodb, docker, ci/cd, grafana, prometheus, loki,
+  aws, azure, python, node.js
 
 PROJECTS
   memstat        go cli for watching ram/cpu across servers in the terminal

@@ -3,8 +3,9 @@
 // Desktop gets a horizontal trace, mobile a vertical one; both share the
 // same packet engine. The packet travels blue on the request leg, green on
 // the response leg, nodes light up as it passes, and the 200 OK badge
-// flashes when the response makes it home. Every node is a section link,
-// and the latency badge is a real number from the Navigation Timing API.
+// flashes when the response makes it home. Every node is a section link.
+// The latency badge and the per-hop numbers (dns / conn / ttfb / body) are
+// all real values from the Navigation Timing API — nothing is made up.
 ---
 
 <div
@@ -32,10 +33,10 @@
 	<div class="sm:hidden">
 		<svg id="trace-svg-m" viewBox="0 0 360 520" class="block h-auto w-full">
 			<path class="wire" d="M180 72 V 122 M180 178 V 228 M180 284 V 334 M180 390 V 440"></path>
-			<text class="hop-lat" x="192" y="101">2ms</text>
-			<text class="hop-lat" x="192" y="207">6ms</text>
-			<text class="hop-lat" x="192" y="313">11ms</text>
-			<text class="hop-lat" x="192" y="419">4ms</text>
+			<text class="hop-lat" x="192" y="101">dns —</text>
+			<text class="hop-lat" x="192" y="207">conn —</text>
+			<text class="hop-lat" x="192" y="313">ttfb —</text>
+			<text class="hop-lat" x="192" y="419">body —</text>
 			<a href="/#about" aria-label="About section">
 				<rect class="node-box" x="70" y="16" width="220" height="56" rx="7"></rect>
 				<text class="node-label" x="180" y="40" text-anchor="middle">client</text>
@@ -70,10 +71,10 @@
 	<div class="hidden overflow-x-auto sm:block">
 		<svg id="trace-svg" viewBox="0 0 1000 190" class="block h-auto w-full min-w-[640px]">
 			<path class="wire" d="M120 95 H 265 M375 95 H 480 M590 95 H 700 M810 95 H 880"></path>
-			<text class="hop-lat" x="170" y="84">2ms</text>
-			<text class="hop-lat" x="408" y="84">6ms</text>
-			<text class="hop-lat" x="625" y="84">11ms</text>
-			<text class="hop-lat" x="826" y="84">4ms</text>
+			<text class="hop-lat" x="192" y="84" text-anchor="middle">dns —</text>
+			<text class="hop-lat" x="427" y="84" text-anchor="middle">conn —</text>
+			<text class="hop-lat" x="645" y="84" text-anchor="middle">ttfb —</text>
+			<text class="hop-lat" x="845" y="84" text-anchor="middle">body —</text>
 			<a href="/#about" aria-label="About section">
 				<rect class="node-box" x="30" y="65" width="90" height="60" rx="7"></rect>
 				<text class="node-label" x="75" y="92" text-anchor="middle">client</text>
@@ -164,11 +165,25 @@
 <script>
 	const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-	// real page latency from the Navigation Timing API
+	// real page latency from the Navigation Timing API — the total in the
+	// badge, plus a per-hop breakdown (dns / conn / ttfb / body) on the wires
 	const latEl = document.getElementById('lat');
 	const setLat = () => {
 		const [nav] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-		if (latEl && nav && nav.duration > 0) latEl.textContent = String(Math.round(nav.duration));
+		if (!nav || nav.duration <= 0) return;
+		if (latEl) latEl.textContent = String(Math.round(nav.duration));
+		const hops = [
+			['dns', nav.domainLookupEnd - nav.domainLookupStart],
+			['conn', nav.connectEnd - nav.connectStart],
+			['ttfb', nav.responseStart - nav.requestStart],
+			['body', nav.responseEnd - nav.responseStart],
+		] as const;
+		for (const id of ['trace-svg', 'trace-svg-m']) {
+			document.getElementById(id)?.querySelectorAll('.hop-lat').forEach((el, i) => {
+				const hop = hops[i];
+				if (hop) el.textContent = `${hop[0]} ${Math.round(hop[1])}ms`;
+			});
+		}
 	};
 	if (document.readyState === 'complete') setLat();
 	else window.addEventListener('load', () => setTimeout(setLat, 0));

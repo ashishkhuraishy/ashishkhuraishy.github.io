@@ -1,6 +1,6 @@
 # ashishkhuraishy.github.io
 
-Personal site + blog of Ashish Khuraishy. Built with [Astro](https://astro.build) and Tailwind CSS, deployed to GitHub Pages on every push to `main`.
+Personal site + blog of Ashish Khuraishy. Built with [Astro](https://astro.build) and Tailwind CSS, deployed to GitHub Pages on every push to `master`.
 
 ## Commands
 
@@ -16,7 +16,7 @@ Personal site + blog of Ashish Khuraishy. Built with [Astro](https://astro.build
 ```text
 src/
 ├── components/        # one file per section of the homepage
-│   ├── Header.astro       # sticky status bar (uptime ticker)
+│   ├── Header.astro       # sticky status bar + nav
 │   ├── Hero.astro
 │   ├── TraceDiagram.astro # animated request-trace SVG
 │   ├── About.astro
