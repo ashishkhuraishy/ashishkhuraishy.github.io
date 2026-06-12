@@ -6,54 +6,75 @@ interface Deploy {
 	period: string;
 	live?: boolean;
 	company: string;
+	url?: string;
 	role: string;
+	// rendered with set:html so links can appear mid-sentence; must stay
+	// static strings authored in this file, never data from elsewhere
 	points: string[];
 }
+
+const voiceProjectUrl =
+	'https://iisc.ac.in/events/iisc-researchers-receive-usd2-million-to-democratise-voice-technology-development-in-nine-indian-languages/';
 
 const deploys: Deploy[] = [
 	{
 		version: 'v3.x',
-		period: '2024 → present',
+		period: 'present',
 		live: true,
 		company: 'IBM',
-		role: 'Backend Engineer, Cloud Platform',
+		url: 'https://cloud.ibm.com/',
+		role: 'Platform Engineer, Cloud',
 		points: [
-			'Building core platform services on IBM Cloud — control plane components, internal APIs, and the infrastructure other product teams ship on.',
-			'Day to day: Go services, Kubernetes, gRPC, observability, and making distributed systems fail predictably instead of creatively.',
-			'Focus on reliability and developer experience at platform scale.',
+			"Write and maintain Kubernetes controllers for IBM Cloud's database platform, the layer the database product teams ship on.",
+			'Work with database teams to get their products running well on the platform: onboarding, integration, and the edge cases in between.',
+			'Take my share of ops duty, which mostly means keeping a multi-tenant platform healthy and learning something from every incident.',
 		],
 	},
 	{
 		version: 'v2.x',
 		period: 'earlier',
-		company: 'AI startup(s)',
-		role: 'Backend / Generalist Engineer',
+		company: 'HiFX',
+		url: 'https://hifx.in/',
+		role: 'Software Engineer',
 		points: [
-			'Built and shipped AI-powered products from zero — model-serving APIs, data pipelines, and the glue that turns a model into a product.',
-			'Owned everything from architecture decisions to deployment, because at a startup the org chart is "you".',
-			'Learned to ship fast without setting the building on fire.',
+			'Worked with small teams, sometimes leading them, on production Go microservices using REST, gRPC, PostgreSQL, Redis, and RabbitMQ.',
+			'Built an EDI service that processed daily warehouse order volumes, and an AWS API that provisioned isolated CTF environments on demand, cutting setup from hours to minutes.',
+			'Helped build a private blockchain on Cosmos SDK for financial data integrity, plus Stripe billing and cryptographic document verification for a SaaS platform.',
+			'Set up monitoring with Grafana, Prometheus, and Loki, and Docker-based CI/CD pipelines.',
 		],
 	},
 	{
 		version: 'v1.x',
+		period: 'earlier still',
+		company: 'Navana',
+		url: 'https://navana.ai/',
+		role: 'Software Engineer, ML Team',
+		points: [
+			`Helped keep the backend of <a href="${voiceProjectUrl}" target="_blank" rel="noopener">India's largest voice-data collection initiative</a> running through peak collection periods.`,
+			'Built an audio validation pipeline in Python that used ML models to take over a good chunk of the manual quality checks.',
+			'Looked after the on-prem GPU infrastructure for ML teams, and built internal tools across Go, Python, Flutter, and React.',
+		],
+	},
+	{
+		version: 'v0.x',
 		period: 'origin',
 		company: 'The early commits',
 		role: 'learning & building',
 		points: [
-			'Side projects, broken clusters, late-night rewrites. The usual path: curiosity → terminal → career.',
+			'Flutter apps, Go experiments, a COVID-19 tracker that picked up 99 GitHub stars, a toy blockchain, a forum backend. The usual path: curiosity → terminal → career.',
 		],
 	},
 ];
 ---
 
-<section id="experience" class="border-t border-line-strong py-12 sm:py-18">
+<section id="experience" class="border-t border-line-strong py-10 sm:py-18">
 	<SectionHead title="Deployment history" path="/experience" />
 	<div class="ml-[7px] flex flex-col border-l-2 border-line-strong">
 		{
 			deploys.map((d) => (
 				<article
 					class:list={[
-						'relative pl-[34px] pb-11 last:pb-0',
+						'relative pl-[22px] pb-8 last:pb-0 sm:pl-[34px] sm:pb-11',
 						"before:absolute before:top-1.5 before:-left-2 before:size-3 before:rounded-full before:content-['']",
 						d.live
 							? 'before:border-[2.5px] before:border-green before:bg-green'
@@ -70,13 +91,23 @@ const deploys: Deploy[] = [
 						)}
 					</p>
 					<h3 class="text-[19px] font-semibold">
-						{d.company} <span class="font-normal text-ink-soft">— {d.role}</span>
+						{
+							d.url ? (
+								<a href={d.url} target="_blank" rel="noopener" class="hover:text-blue">
+									{d.company}
+								</a>
+							) : (
+								d.company
+							)
+						}
+						<span class="font-normal text-ink-soft">— {d.role}</span>
 					</h3>
 					<ul class="mt-2.5 max-w-[640px] text-[15.5px] text-ink-soft">
 						{d.points.map((point) => (
-							<li class="relative mt-1.5 pl-[18px] before:absolute before:left-0.5 before:font-mono before:text-blue before:content-['›']">
-								{point}
-							</li>
+							<li
+								class="relative mt-1.5 pl-[18px] before:absolute before:left-0.5 before:font-mono before:text-blue before:content-['›'] [&_a]:underline [&_a]:decoration-line-strong [&_a]:underline-offset-2 [&_a:hover]:text-blue"
+								set:html={point}
+							/>
 						))}
 					</ul>
 				</article>

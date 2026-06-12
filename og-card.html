@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap');
+	* { margin: 0; padding: 0; box-sizing: border-box; }
+	body {
+		width: 1200px; height: 630px;
+		background-color: #f6f8fa;
+		background-image:
+			linear-gradient(#e9eef4 1px, transparent 1px),
+			linear-gradient(90deg, #e9eef4 1px, transparent 1px);
+		background-size: 48px 48px;
+		font-family: 'IBM Plex Sans', system-ui, sans-serif;
+		color: #0b1220;
+		display: flex; flex-direction: column; justify-content: space-between;
+		padding: 64px 72px 56px;
+	}
+	.bar { display: flex; align-items: center; gap: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 19px; color: #4b5563; }
+	.pill { background: #d0e2ff; color: #00309b; font-weight: 600; padding: 3px 12px; border-radius: 5px; }
+	.ok { color: #0e6027; font-weight: 600; margin-left: auto; }
+	h1 { font-size: 78px; line-height: 1.08; letter-spacing: -0.022em; font-weight: 700; max-width: 980px; }
+	h1 .blue { color: #0f62fe; }
+	.sub { margin-top: 26px; font-family: 'IBM Plex Mono', monospace; font-size: 24px; color: #4b5563; }
+	.sub b { color: #0b1220; font-weight: 600; }
+	.trace { display: flex; align-items: center; gap: 0; font-family: 'IBM Plex Mono', monospace; }
+	.node {
+		border: 1.5px solid #b8c2ce; background: #fff; border-radius: 8px;
+		padding: 12px 22px; font-size: 18px; color: #0b1220; font-weight: 600;
+	}
+	.node.hot { border-color: #0f62fe; color: #0f62fe; border-width: 2px; }
+	.wire { width: 56px; height: 1.5px; background: #b8c2ce; position: relative; }
+	.wire.packet::after {
+		content: ''; position: absolute; top: -5px; left: 20px;
+		width: 11px; height: 11px; border-radius: 50%; background: #0f62fe;
+	}
+</style>
+</head>
+<body>
+	<div class="bar">
+		<span class="pill">TRACE</span>
+		<span>GET /portfolio · req_id=7f3a91</span>
+		<span class="ok">200 OK · 38ms</span>
+	</div>
+	<div>
+		<h1>I work on the platforms<br/>other engineers <span class="blue">build on.</span></h1>
+		<div class="sub"><b>ashish khuraishy</b> · platform engineer · go · kubernetes</div>
+	</div>
+	<div class="trace">
+		<span class="node">client</span><span class="wire"></span><span class="node">edge / LB</span><span class="wire packet"></span><span class="node hot">api (go)</span><span class="wire"></span><span class="node">queue</span><span class="wire"></span><span class="node">db</span>
+	</div>
+</body>
+</html>

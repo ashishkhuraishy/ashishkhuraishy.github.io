@@ -13,40 +13,56 @@ interface Project {
 
 const projects: Project[] = [
 	{
-		repo: `github.com/${SOCIALS.github}/project-one`,
+		repo: `github.com/${SOCIALS.github}/memstat`,
 		status: 'prod',
-		title: 'Project One',
+		title: 'Memstat',
 		description:
-			'Replace me — your strongest real project. One sentence on the problem, one on the result. Numbers beat adjectives: requests/sec, p99 latency, money saved.',
-		tags: ['#go', '#k8s', '#grpc'],
+			'Go CLI that monitors RAM and CPU across multiple servers and renders the numbers as live terminal graphs. Built so I could watch my whole fleet without keeping five SSH tabs open.',
+		tags: ['#go', '#cli', '#monitoring'],
+		url: `https://github.com/${SOCIALS.github}/memstat`,
 	},
 	{
-		repo: `github.com/${SOCIALS.github}/project-two`,
+		repo: `github.com/${SOCIALS.github}/kaldi-server`,
 		status: 'prod',
-		title: 'Project Two',
+		title: 'Kaldi Server',
 		description:
-			'Replace me — ideally something from your AI-startup era. "Built X that served Y users / processed Z events a day" is the format recruiters remember.',
-		tags: ['#ai', '#pipelines', '#apis'],
+			'Docker base image for the Kaldi speech toolkit, optimised for running ASR servers on top of it. 2k+ pulls on Docker Hub from people who also didn\'t want to compile Kaldi from scratch.',
+		tags: ['#docker', '#speech', '#asr'],
+		url: `https://github.com/${SOCIALS.github}/kaldi-server`,
 	},
 	{
-		repo: `github.com/${SOCIALS.github}/weekend-build`,
+		repo: `github.com/${SOCIALS.github}/ashishkhuraishy.github.io`,
 		status: 'building',
-		title: 'Current experiment',
+		title: 'This site',
 		description:
-			'Replace me — the thing you\'re learning right now. Keeping a "building" card here permanently signals exactly what you said: you like learning and building new shit.',
-		tags: ['#learning', '#wip'],
+			'The page you\'re reading, built with Astro, Tailwind, and an animated request trace. Permanently marked "building" because that\'s the honest status of every personal site ever made.',
+		tags: ['#astro', '#wip'],
+		url: `https://github.com/${SOCIALS.github}/ashishkhuraishy.github.io`,
 	},
 ];
 ---
 
-<section id="projects" class="border-t border-line-strong py-12 sm:py-18">
+<section id="projects" class="border-t border-line-strong py-10 sm:py-18">
 	<SectionHead title="Projects" path="/projects" />
 	<div class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))]">
 		{
 			projects.map((p) => (
 				<article class="flex flex-col gap-2.5 rounded-[10px] border border-line-strong bg-panel p-4 transition hover:-translate-y-[3px] hover:border-blue hover:shadow-[0_14px_30px_-18px_rgba(15,98,254,.35)] sm:p-[22px]">
 					<div class="flex items-center gap-2.5 font-mono text-xs">
-						<span class="break-all text-ink-soft">{p.repo}</span>
+						{
+							p.url ? (
+								<a
+									href={p.url}
+									target="_blank"
+									rel="noopener"
+									class="break-all text-ink-soft hover:text-blue"
+								>
+									{p.repo}
+								</a>
+							) : (
+								<span class="break-all text-ink-soft">{p.repo}</span>
+							)
+						}
 						<span
 							class:list={[
 								'ml-auto rounded-full border px-2 py-px text-[11px] font-semibold',

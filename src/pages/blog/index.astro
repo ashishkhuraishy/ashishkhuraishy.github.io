@@ -15,7 +15,7 @@ const posts = (await getCollection('blog')).sort(
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`Blog — ${SITE_TITLE}`} description="Notes on Go, Kubernetes, distributed systems, and things learned by building." />
+		<BaseHead title={`Blog · ${SITE_TITLE}`} description="Notes on Go, Kubernetes, distributed systems, and things learned by building." />
 	</head>
 	<body>
 		<Header />
@@ -24,7 +24,7 @@ const posts = (await getCollection('blog')).sort(
 				<SectionHead title="Blog" path="/blog" />
 				{
 					posts.length === 0 ? (
-						<p class="font-mono text-sm text-ink-soft">204 No Content — posts coming soon.</p>
+						<p class="font-mono text-sm text-ink-soft">204 No Content. Posts coming soon.</p>
 					) : (
 						<ul class="flex flex-col gap-4">
 							{posts.map((post) => (

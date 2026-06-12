@@ -1,0 +1,135 @@
+
+================================================================================
+ERROR LOGGED: 2026-06-12T18:39:53.681Z
+================================================================================
+Error Name: Error
+Error Message: Connection failed for 'github': MCP error -32000: Connection closed
+
+Stack Trace:
+Error: Connection failed for 'github': MCP error -32000: Connection closed
+    at $lr (file:///opt/homebrew/lib/node_modules/bobshell/bundle/bob.js:3480:10291)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async zwe.connect (file:///opt/homebrew/lib/node_modules/bobshell/bundle/bob.js:3480:13137)
+    at async file:///opt/homebrew/lib/node_modules/bobshell/bundle/bob.js:3480:17293
+================================================================================
+
+
+================================================================================
+ERROR LOGGED: 2026-06-12T18:53:56.840Z
+User ID: ashishkhuraishi@ibm.com
+================================================================================
+Error Name: Error
+Error Message: ripgrep exited with code 2: regex parse error:
+    class="[^"]*\b(min-w-\[|w-\[(?!full))
+                                ^^^
+error: look-around, including look-ahead and look-behind, is not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+
+Stack Trace:
+Error: ripgrep exited with code 2: regex parse error:
+    class="[^"]*\b(min-w-\[|w-\[(?!full))
+                                ^^^
+error: look-around, including look-ahead and look-behind, is not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+    at ChildProcess.<anonymous> (file:///opt/homebrew/lib/node_modules/bobshell/bundle/bob.js:2272:1451)
+    at ChildProcess.emit (node:events:509:20)
+    at maybeClose (node:internal/child_process:1108:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+================================================================================
+
+
+================================================================================
+ERROR LOGGED: 2026-06-12T18:53:56.841Z
+User ID: ashishkhuraishi@ibm.com
+================================================================================
+Error Name: Error
+Error Message: ripgrep exited with code 2: regex parse error:
+    class="[^"]*\b(min-w-\[|w-\[(?!full))
+                                ^^^
+error: look-around, including look-ahead and look-behind, is not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+
+Stack Trace:
+Error: ripgrep exited with code 2: regex parse error:
+    class="[^"]*\b(min-w-\[|w-\[(?!full))
+                                ^^^
+error: look-around, including look-ahead and look-behind, is not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+    at ChildProcess.<anonymous> (file:///opt/homebrew/lib/node_modules/bobshell/bundle/bob.js:2272:1451)
+    at ChildProcess.emit (node:events:509:20)
+    at maybeClose (node:internal/child_process:1108:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+================================================================================
+
+
+================================================================================
+ERROR LOGGED: 2026-06-12T18:54:02.562Z
+User ID: ashishkhuraishi@ibm.com
+================================================================================
+Error Name: Error
+Error Message: ripgrep exited with code 2: regex parse error:
+    w-\[(?!full)
+        ^^^
+error: look-around, including look-ahead and look-behind, is not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+
+Stack Trace:
+Error: ripgrep exited with code 2: regex parse error:
+    w-\[(?!full)
+        ^^^
+error: look-around, including look-ahead and look-behind, is not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+    at ChildProcess.<anonymous> (file:///opt/homebrew/lib/node_modules/bobshell/bundle/bob.js:2272:1451)
+    at ChildProcess.emit (node:events:509:20)
+    at maybeClose (node:internal/child_process:1108:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+================================================================================
+
+
+================================================================================
+ERROR LOGGED: 2026-06-12T18:54:02.562Z
+User ID: ashishkhuraishi@ibm.com
+================================================================================
+Error Name: Error
+Error Message: ripgrep exited with code 2: regex parse error:
+    w-\[(?!full)
+        ^^^
+error: look-around, including look-ahead and look-behind, is not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+
+Stack Trace:
+Error: ripgrep exited with code 2: regex parse error:
+    w-\[(?!full)
+        ^^^
+error: look-around, including look-ahead and look-behind, is not supported
+
+Consider enabling PCRE2 with the --pcre2 flag, which can handle backreferences
+and look-around.
+
+    at ChildProcess.<anonymous> (file:///opt/homebrew/lib/node_modules/bobshell/bundle/bob.js:2272:1451)
+    at ChildProcess.emit (node:events:509:20)
+    at maybeClose (node:internal/child_process:1108:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+================================================================================
+

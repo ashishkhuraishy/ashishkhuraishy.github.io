@@ -2,24 +2,25 @@
 import SectionHead from './SectionHead.astro';
 ---
 
-<section id="stack" class="border-t border-line-strong py-12 sm:py-18">
+<section id="stack" class="border-t border-line-strong py-10 sm:py-18">
 	<SectionHead title="Stack" path="/stack" />
 	<pre
 		class="overflow-x-auto rounded-[10px] bg-ink p-4 font-mono text-xs leading-[1.85] text-[#D6DEE9] shadow-[0_18px_40px_-28px_rgba(11,18,32,.5)] sm:p-7 sm:text-[13.5px]"
-		aria-label="Skills presented as a Go module file"><code><span class="c">// what I actually use, not a keyword wall</span>
+		aria-label="Skills presented as a Go module file"><code><span class="c">// the short list of things I use enough to be opinionated about</span>
 <span class="kw">module</span> <span class="str">github.com/ashishkhuraishy/engineering</span>
 
 <span class="kw">go</span> <span class="ver">1.24</span>
 
 <span class="kw">require</span> (
-    <span class="str">golang</span>                  <span class="ver">vDaily</span>   <span class="c">// services, CLIs, concurrency</span>
-    <span class="str">kubernetes</span>              <span class="ver">vProd</span>    <span class="c">// operators, controllers, debugging at 2am</span>
+    <span class="str">golang</span>                  <span class="ver">vDaily</span>   <span class="c">// services, controllers, CLIs</span>
+    <span class="str">kubernetes</span>              <span class="ver">vDaily</span>   <span class="c">// custom controllers, operators, debugging at 2am</span>
     <span class="str">grpc-and-rest</span>           <span class="ver">vProd</span>    <span class="c">// api design, protobuf, versioning</span>
     <span class="str">postgres / redis</span>        <span class="ver">vProd</span>    <span class="c">// state, caching, "why is this slow"</span>
-    <span class="str">kafka / queues</span>          <span class="ver">vProd</span>    <span class="c">// async pipelines, exactly-once-ish</span>
-    <span class="str">terraform / ci-cd</span>       <span class="ver">vProd</span>    <span class="c">// infra as code, pipelines</span>
-    <span class="str">observability</span>           <span class="ver">vProd</span>    <span class="c">// prometheus, tracing, slo thinking</span>
-    <span class="str">ai-systems</span>              <span class="ver">vShipped</span> <span class="c">// llm apis, serving, rag pipelines</span>
+    <span class="str">rabbitmq / queues</span>       <span class="ver">vProd</span>    <span class="c">// async pipelines, exactly-once-ish</span>
+    <span class="str">docker / ci-cd</span>          <span class="ver">vProd</span>    <span class="c">// images, pipelines, releases</span>
+    <span class="str">observability</span>           <span class="ver">vProd</span>    <span class="c">// grafana, prometheus, loki, slo thinking</span>
+    <span class="str">aws / cloud-infra</span>       <span class="ver">vProd</span>    <span class="c">// provisioning apis, automation</span>
+    <span class="str">ml-infra</span>                <span class="ver">vShipped</span> <span class="c">// gpu clusters, validation pipelines</span>
     <span class="str">new-shiny-things</span>        <span class="ver">vAlways</span>  <span class="c">// currently learning: see /projects</span>
 )</code></pre>
 	<p class="mt-4 text-sm text-ink-soft">

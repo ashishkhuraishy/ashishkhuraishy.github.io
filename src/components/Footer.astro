@@ -1,5 +1,5 @@
 ---
-import { CAREER_START, SITE_DOMAIN } from '../consts';
+import { SITE_DOMAIN } from '../consts';
 
 const year = new Date().getFullYear();
 ---
@@ -8,33 +8,8 @@ const year = new Date().getFullYear();
 	<div
 		class="mx-auto flex max-w-site flex-col gap-2 px-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-[18px] sm:px-6"
 	>
-		<span>
-			<span class="font-semibold text-green">200 OK</span>
-			<span class="ml-2">
-				uptime
-				<span id="uptime" data-start={CAREER_START} class="font-medium text-ink tabular-nums">—</span>
-			</span>
-		</span>
-		<span>served from bengaluru · built with astro + tailwind</span>
+		<span class="font-semibold text-green-deep">200 OK</span>
+		<span>built with astro + tailwind</span>
 		<span class="sm:ml-auto">© {year} {SITE_DOMAIN}</span>
 	</div>
 </footer>
-
-<script>
-	// uptime ticker (since "career start" — edit CAREER_START in src/consts.ts)
-	// zero-padded + tabular-nums so the line doesn't shift width every second
-	const el = document.getElementById('uptime');
-	if (el instanceof HTMLElement && el.dataset.start) {
-		const start = new Date(el.dataset.start).getTime();
-		const pad = (n: number) => String(n).padStart(2, '0');
-		const tick = () => {
-			const s = Math.floor((Date.now() - start) / 1000);
-			const d = Math.floor(s / 86400);
-			const h = Math.floor((s % 86400) / 3600);
-			const m = Math.floor((s % 3600) / 60);
-			el.textContent = `${d}d ${pad(h)}:${pad(m)}:${pad(s % 60)}`;
-		};
-		tick();
-		setInterval(tick, 1000);
-	}
-</script>

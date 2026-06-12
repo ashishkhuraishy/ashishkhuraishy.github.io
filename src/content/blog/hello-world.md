@@ -6,7 +6,7 @@ pubDate: '2026-06-12'
 
 Hi, I'm Ashish.
 
-I'm a backend engineer who likes building things. Mostly Go and distributed systems, plus whatever corner of AI has my attention that week.
+I'm a platform engineer who likes building things. Mostly Go, Kubernetes, and distributed systems, plus whatever corner of AI has my attention that week.
 
 I learn by making stuff and breaking it, and the lessons disappear if I don't write them down. So this blog is where they go: debugging stories, things I'm learning, opinions I'll probably revise later.
 

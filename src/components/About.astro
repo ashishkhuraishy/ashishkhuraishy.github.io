@@ -2,32 +2,41 @@
 import SectionHead from './SectionHead.astro';
 
 const facts = [
-	{ k: 'role', v: 'backend / platform' },
+	{ k: 'role', v: 'platform engineering' },
 	{ k: 'current', v: 'IBM Cloud' },
-	{ k: 'location', v: 'Bengaluru, IN' },
 	{ k: 'primary_lang', v: 'Go' },
-	{ k: 'interests', v: 'infra · AI · distsys' },
+	{ k: 'daily_driver', v: 'Kubernetes' },
+	{ k: 'interests', v: 'infra · distsys · AI' },
 ];
 ---
 
-<section id="about" class="border-t border-line-strong py-12 sm:py-18">
+<section id="about" class="border-t border-line-strong py-10 sm:py-18">
 	<SectionHead title="About" path="/about" />
 	<div class="grid items-start gap-8 md:grid-cols-[1.4fr_1fr] md:gap-12">
-		<div class="space-y-3.5 text-[15.5px] text-ink-soft sm:text-[16.5px] [&_strong]:font-semibold [&_strong]:text-ink">
+		<div class="space-y-3.5 text-[15.5px] text-ink-soft sm:text-[16.5px] [&_strong]:font-semibold [&_strong]:text-ink [&_a]:underline [&_a]:decoration-line-strong [&_a]:underline-offset-2 [&_a:hover]:text-blue">
 			<p>
-				I'm a <strong>backend engineer and generalist</strong> who likes owning problems end to end
-				— from API design and data models to the Kubernetes manifests and the on-call runbook.
-				Right now that means building cloud platform infrastructure at <strong>IBM</strong>: the
-				boring-on-purpose layer that thousands of services depend on.
+				I'm a <strong>platform engineer at IBM</strong>, working on the
+				<a href="https://cloud.ibm.com/" target="_blank" rel="noopener">cloud layer</a> that
+				database products run on. Day to day that means writing and maintaining
+				<strong>Kubernetes controllers</strong>, helping database teams get their products
+				platform-ready, and taking my turn on the pager. It's the boring-on-purpose
+				infrastructure that other teams ship on.
 			</p>
 			<p>
-				Before that I worked with <strong>AI systems and startups</strong>, where shipping fast and
-				wearing every hat taught me more than any course could. The startup speed plus the
-				platform-scale discipline is the combination I bring everywhere.
+				Before this I worked on <strong>production Go microservices</strong>: EDI pipelines,
+				a private blockchain on Cosmos SDK, and on-demand AWS environments. Earlier I helped keep
+				the backend of
+				<a
+					href="https://iisc.ac.in/events/iisc-researchers-receive-usd2-million-to-democratise-voice-technology-development-in-nine-indian-languages/"
+					target="_blank"
+					rel="noopener"><strong>India's largest voice-data collection platform</strong></a
+				>
+				running while looking after GPU infrastructure for its ML teams. Small teams taught me to
+				ship fast; platform work is teaching me the discipline to ship things that last.
 			</p>
 			<p>
 				My default mode is <strong>learning by building</strong>. New runtime, new protocol, new
-				database — the fastest way I understand anything is to put it in production and watch what
+				database: the fastest way I understand anything is to put it in production and watch what
 				breaks.
 			</p>
 		</div>
@@ -45,7 +54,7 @@ const facts = [
 			}
 			<div class="flex justify-between gap-3 px-4 py-[11px]">
 				<span class="text-ink-soft">status</span>
-				<span class="text-right font-semibold text-green">open to interesting work</span>
+				<span class="text-right font-semibold text-green-deep">always happy to talk</span>
 			</div>
 		</aside>
 	</div>
