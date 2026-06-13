@@ -1,19 +1,19 @@
 ASHISH KHURAISHY
-platform engineer · kochi, india
+platform engineer · banglore, india
 
   email      ashishkhuraishy@gmail.com
   github     github.com/ashishkhuraishy
   linkedin   linkedin.com/in/ashish-khuraishy
   site       ashishkhuraishy.github.io
 
-2026 — NOW · IBM · Platform Engineer, Cloud
+2026 - NOW · IBM · Platform Engineer, Cloud
   - Write and maintain Kubernetes controllers for IBM Cloud's database
     platform, the layer the database product teams ship on.
   - Work with database teams to get their products running well on the
     platform: onboarding, integration, and the edge cases in between.
   - Regular ops duty on a multi-tenant platform.
 
-2023 — 2026 · HiFX · Software Engineer
+2023 - 2026 · HiFX · Software Engineer
   - Led and mentored small teams building production Go microservices:
     REST, gRPC, PostgreSQL, Redis, RabbitMQ.
   - Built an EDI service processing daily warehouse order volumes, and
@@ -25,7 +25,7 @@ platform engineer · kochi, india
   - Set up monitoring with Grafana, Prometheus, and Loki, and
     Docker-based CI/CD pipelines.
 
-2021 — 2023 · Navana · Software Engineer, ML Team
+2021 - 2023 · Navana · Software Engineer, ML Team
   - Kept the backend of India's largest voice-data collection
     initiative stable through peak collection periods.
   - Built an ML-based audio validation pipeline in Python that took

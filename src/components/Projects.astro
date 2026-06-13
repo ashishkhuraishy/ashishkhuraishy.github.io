@@ -44,10 +44,10 @@ const projects: Project[] = [
 
 <section id="projects" class="border-t border-line-strong py-10 sm:py-18">
 	<SectionHead title="Projects" path="/projects" />
-	<div class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))]">
+	<div class="grid gap-5 grid-cols-[repeat(auto-fit,minmax(min(100%,290px),1fr))]">
 		{
 			projects.map((p) => (
-				<article class="flex flex-col gap-2.5 rounded-[10px] border border-line-strong bg-panel p-4 transition hover:-translate-y-[3px] hover:border-blue hover:shadow-[0_14px_30px_-18px_rgba(15,98,254,.35)] sm:p-[22px]">
+				<article class="flex flex-col gap-2.5 rounded-[10px] border border-line-strong bg-panel p-4 transition hover:-translate-y-0.75 hover:border-blue hover:shadow-[0_14px_30px_-18px_rgba(15,98,254,.35)] sm:p-5.5">
 					<div class="flex items-center gap-2.5 font-mono text-xs">
 						{
 							p.url ? (

@@ -16,7 +16,7 @@
 	<div
 		class="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line px-4 py-2.5 font-mono text-xs text-ink-soft sm:text-[12.5px]"
 	>
-		<span class="rounded-[4px] bg-blue-dim px-[7px] py-px font-semibold text-blue-deep">TRACE</span>
+		<span class="rounded-sm bg-blue-dim px-1.75 py-px font-semibold text-blue-deep">TRACE</span>
 		<span>GET /portfolio</span>
 		<span class="hidden sm:inline">· req_id=<span id="reqid">7f3a91</span></span>
 		<span class="hidden md:inline">· nodes are links</span>
@@ -69,7 +69,7 @@
 
 	<!-- desktop: horizontal trace -->
 	<div class="hidden overflow-x-auto sm:block">
-		<svg id="trace-svg" viewBox="0 0 1000 190" class="block h-auto w-full min-w-[640px]">
+		<svg id="trace-svg" viewBox="0 0 1000 190" class="block h-auto w-full min-w-160">
 			<path class="wire" d="M120 95 H 265 M375 95 H 480 M590 95 H 700 M810 95 H 880"></path>
 			<text class="hop-lat" x="192" y="84" text-anchor="middle">dns —</text>
 			<text class="hop-lat" x="427" y="84" text-anchor="middle">conn —</text>
@@ -209,7 +209,7 @@
 		centers: number[];
 		pkt: SVGCircleElement;
 		glow: SVGCircleElement;
-		nodes: SVGAElement[];
+		nodes: HTMLAnchorElement[];
 	}
 
 	const buildTrace = (svgId: string, axis: 'cx' | 'cy', from: number, to: number, centers: number[]): Trace | null => {

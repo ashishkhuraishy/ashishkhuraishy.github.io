@@ -2,11 +2,12 @@
 import SectionHead from './SectionHead.astro';
 
 const facts = [
-	{ k: 'role', v: 'platform engineering' },
+	{ k: 'role', v: 'cloud backend' },
 	{ k: 'current', v: 'IBM Cloud' },
 	{ k: 'primary_lang', v: 'Go' },
 	{ k: 'daily_driver', v: 'Kubernetes' },
 	{ k: 'interests', v: 'infra · distsys · AI' },
+	{ k: 'off_duty', v: 'HTB · coffee · football' },
 ];
 ---
 
@@ -15,12 +16,12 @@ const facts = [
 	<div class="grid items-start gap-8 md:grid-cols-[1.4fr_1fr] md:gap-12">
 		<div class="space-y-3.5 text-[15.5px] text-ink-soft sm:text-[16.5px] [&_strong]:font-semibold [&_strong]:text-ink [&_a]:underline [&_a]:decoration-line-strong [&_a]:underline-offset-2 [&_a:hover]:text-blue">
 			<p>
-				I'm a <strong>platform engineer at IBM</strong>, working on the
+				I'm a <strong>backend engineer at IBM</strong>, working on the
 				<a href="https://cloud.ibm.com/" target="_blank" rel="noopener">cloud layer</a> that
 				database products run on. Day to day that means writing and maintaining
 				<strong>Kubernetes controllers</strong>, helping database teams get their products
-				platform-ready, and taking my turn on the pager. It's the boring-on-purpose
-				infrastructure that other teams ship on.
+				running on the platform, and taking my turn on the pager. It's the boring-on-purpose
+				infrastructure that other teams ship on. That's exactly what I find interesting about it.
 			</p>
 			<p>
 				Before this I worked on <strong>production Go microservices</strong>: EDI pipelines,
@@ -35,9 +36,11 @@ const facts = [
 				ship fast; platform work is teaching me the discipline to ship things that last.
 			</p>
 			<p>
-				My default mode is <strong>learning by building</strong>. New runtime, new protocol, new
-				database: the fastest way I understand anything is to put it in production and watch what
-				breaks.
+				<strong>Distributed systems</strong> are the part I keep coming back to. Something about
+				how failure emerges from machines that all individually did the right thing never stops
+				being interesting. Outside of work I root boxes on <strong>HackTheBox</strong>.
+				Understanding how things break is useful regardless of which side of the problem you're on.
+				When I'm away from the screen it's football or coffee. Always happy to chat.
 			</p>
 		</div>
 		<aside
@@ -46,13 +49,13 @@ const facts = [
 		>
 			{
 				facts.map(({ k, v }) => (
-					<div class="flex justify-between gap-3 border-b border-line px-4 py-[11px]">
+					<div class="flex justify-between gap-3 border-b border-line px-4 py-2.75">
 						<span class="text-ink-soft">{k}</span>
 						<span class="text-right font-semibold">{v}</span>
 					</div>
 				))
 			}
-			<div class="flex justify-between gap-3 px-4 py-[11px]">
+			<div class="flex justify-between gap-3 px-4 py-2.75">
 				<span class="text-ink-soft">status</span>
 				<span class="text-right font-semibold text-green-deep">always happy to talk</span>
 			</div>
